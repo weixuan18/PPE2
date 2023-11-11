@@ -1,0 +1,321 @@
+.head{
+    padding :2em;
+    justify-content: center;
+    background-image: url(../img/une.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgb(60, 62, 71);
+}
+
+.head h1{
+    font-size: 4em;
+    text-align: left;
+    color: #ded1c1;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    margin-top: 4em;
+    border-bottom: 0.5px solid #ded1c1;
+    padding-bottom: 0.5em;
+}
+
+.cat1{
+    padding : 5em;
+    text-align: justify;
+    display: block;
+}
+.cat1 h1{
+    text-transform: uppercase;
+    background-color: #8881777e;
+    float: left;
+    background-size: 100%;
+    font-size: 2em;
+    line-height: 1.5em;
+}
+
+.cat1 .text_img1{
+    padding: 0em;
+    padding-left: 2.5em;
+    margin-left: 3em;
+}
+.cat1 .text_img1 .titre{
+    margin-top: 3em;
+    position : center;
+    padding: 0.5em;
+}
+
+.cat1 .text_img1 .text{
+    margin-bottom: 2em;
+    padding: 3em;
+    margin-right: 6em;
+}
+
+.text p{
+    margin-bottom: 2em;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    color: #ded1c1;
+    transition: all 0.5s;
+    transition-duration:1s;
+    transition-property: all;
+}
+.text li{
+    line-height: 1.5;
+    font-size: 1.1em;
+}
+.img1{
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    margin:0;
+    padding:11em;
+    font-size: 30%;
+    margin-left:10em;
+}
+.img1 p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+    line-height: 1.8em;
+    color: #ded1c1;
+    transition: all 0.5s;
+    transition-duration:1s;
+    transition-property: all;
+}
+
+.head h2{
+    font-size: 1.2em;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}
+.head h3{
+    font-size: 0.9em;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}
+
+.cat2{
+    background-color: antiquewhite;
+    background-size: cover;
+    color:#2b333f;
+    padding : 3em;
+}
+
+.cat2 h1{
+    padding : 2em;
+    margin-bottom: 1.5em;
+    float: left;
+    text-transform: uppercase;
+    font-size: 2.5em;
+}
+
+.text_img2{
+    display: flex;
+    flex: wrap;
+    color: #2b333f;
+    text-align: justify;
+}
+.text_img2 .titre{
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    font-size: 1.6em; 
+    float: left;
+}
+.text_img2 .text2{
+    margin-top: 2em;
+    margin-bottom: 1em;
+    margin : 4em;
+    font-size: 1.1em;
+    color: #2b333f;
+}
+.text2 p{
+    margin-bottom: 1em;
+    padding: 0;
+    font-size: 1.1em;
+    line-height: 1.8em;
+    color: #2b333f;
+    transition: all 0.5s;
+    transition-duration:1s;
+    transition-property: all;
+}
+
+
+.cat3{
+    background-size: cover;
+    text-align: justify;
+    margin : 5em;
+}
+.cat3 h1{
+    font-size: 3em;
+    color: #ded1c1;
+    text-transform: uppercase;
+    float: right;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.text_img3 .titre{
+    margin-top: 2em;
+    margin-bottom: 1em;
+    padding : 1em;
+    align-items : center;
+    justify-content: center;
+    font-size: 2em;
+}
+.text_img3 .text{
+    margin-top: 2em;
+    padding : 5em;
+    margin : 4em;
+    font-size: 1em;
+    color: #ded1c1;
+}
+
+button{
+    margin:2rem;
+    background-color: #ded1c1;
+    color: #2b333f;
+}
+
+.gauche{
+    float: left;
+}
+.droite{
+    float: right;
+}   
+
+.head2{
+    padding :2em;
+    justify-content: center;
+    background-image: url(../img/politique.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgb(60, 62, 71);
+}
+
+.head2 h1{
+    font-size: 4em;
+    text-align: left;
+    color: #ded1c1;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    margin-top: 3em;
+    border-bottom: 0.5px solid #ded1c1;
+    padding-bottom: 0.5em;
+}
+
+.head2 h2{
+    font-size: 1em;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}
+
+.head3{
+    padding :2em;
+    justify-content: center;
+    background-image: url(../img/International.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgb(60, 62, 71);
+}
+
+.head3 h1{
+    font-size: 4em;
+    text-align: left;
+    color: #ded1c1;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    margin-top: 3em;
+    border-bottom: 0.5px solid #ded1c1;
+    padding-bottom: 0.5em;
+}   
+
+.head3 h2{
+    font-size: 1em;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}   
+
+.head4 {
+    padding :2em;
+    justify-content: center;
+    background-image: url(../img/international2.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgb(60, 62, 71);
+}
+.head4 h1{
+    font-size: 4em;
+    text-align: left;
+    color: #ded1c1;
+    text-transform: uppercase;
+    margin-bottom: 0.4em;
+    margin-top: 3em;
+    border-bottom: 0.5px solid #ded1c1;
+    padding-bottom: 0.5em;
+}
+
+.head4 h2{
+    font-size: 1em;
+    text-align: left;
+    color: #fff;
+    margin-bottom: 0.4em;
+    margin-top: 0.4em;
+}
+
+.cat1 .site_button, .cat3 .site_button, .cat2 .site_button{
+    margin-top: 1em;
+    margin-left: 8em;
+    text-align: justify;
+    width: 340px;
+    height: 30px;
+    background-color: #2b333f;
+    border-radius: 8px;
+}
+.cat1 .site_button a, .cat3 .site_button a, .cat2 .site_button a{
+    color: #ded1c1;
+    font-size: 1em;
+    line-height: 30px;
+    text-align: center;
+    display: block;
+    transition: all 0.2s;
+    transition-duration:0.s;
+    transition-property: all;
+}
+.cat1 .site_button a:hover, .cat3 .site_button a:hover, .cat2 .site_button a:hover{
+    color: #2b333f;
+    background-color: #ded1c176;
+    border-radius: 8px;
+}
+
+#ldavis_el39554139706137985984613013140, #ldavis_el1280651402160067490723698442624, #ldavis_el1284061399671323963207029765650, #ldavis_el397021402950218427685973338256, #ldavis_el128852139931875224352180649529, #ldavis_el398501397248363507526739362222, #ldavis_el399991402026509607207759629913, #ldavis_el1292601400507531865926778965559{
+    width: 90%;;
+    height: 70%;
+    margin: auto;
+    margin-top: 3em;
+}
+
+#ldavis_el1322561397842509607848717689925, #ldavis_el13286513984968528134426084049, #ldavis_el1333931396224953332645806621310, #ldavis_el1336531404683783320486293870883, #ldavis_el1647271399860359753126746862678, #ldavis_el1644961402402676616486095314312, #ldavis_el1642891401767724594086129317768, #ldavis_el1649801404575794901921122696464{
+    width: 86%;
+    height: 80%;
+    padding : 3em;
+    margin-left : 7em;
+    margin-bottom : 2em;
+}
+
+

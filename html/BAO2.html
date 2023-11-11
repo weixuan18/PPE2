@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/sous-style1.css" />
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+        <link href = "./img/avatar_ppe2.png" rel = "SHORTCUT ICON">
+        <title>bao2</title>
+    </head>
+    <body>
+        <header class="header">
+            <a href="#" class="logo">Projet Encadré: <h1 class="title">Boite À Outils 1</h1></a>
+            <nav class="navbar">
+                <a href="./index.html" class="item" style="--i: 1">Accueil</a>
+                <a href="./BAO1.html" class="item" style="--i:  2">BAO1</a>
+                <a href="./BAO2.html" class="active item" style="--i:  3">BAO2</a>
+                <a href="./BAO3.html" class="item" style="--i:  4">BAO3</a>
+                <a href="./BAO4.html" class="item" style="--i:  5">BAO4</a>
+            </nav>
+        </header>
+        <section id="wrapper">
+            <header>
+                <div class="inner">
+                    <h2>Boîte à Outils 2</h2>
+                    <p>Analyse automatique, Extraction de patrons</p>
+                </div>
+            </header>
+            <!-- Content -->
+            <div class="wrapper">
+                <div class="inner">
+                    <h3 class="major">Idée principale</h3>
+                    <p align = "justify">BAO 2 consiste à enrichir les résultats extraits des flux RSS au niveau morpho-syntaxique. L'objectif
+                        principal de ce processus est d'associer aux mots des valeurs morpho-syntaxiques
+                        telles que leur lemme et leur partie du discours, permettant ainsi de trouver leurs schémas.
+                        Pour y parvenir, nous devrions évidemment travailler avec trois outils de corpus fameux "spaCy" "trankit" "stanza".</p>
+                    <p align = "justify">Avant d'effectuer l'analyse automatique, nous avons appris dans le cours que nous pouvons utiliser "dataclasses" 
+                        afin de stocker les données de manière plus strcuturé. Cela facilite beaucoup le processus de stockage des données dans le programme. 
+                        C'est pourquoi nous avons donc créé le script "datastructures.py".</p>    
+                    <p align = "justify">L'analyse automatique est ensuite réalisée à l'aide des trois logiciels précédemment mentionnés dans notre cas. Ces trois analyseurs nous
+                        permettent tout d'abord de tokenizer tous les mots compris dans les "titre" "description", puis de
+                        leur attribuer un lemme et une partie du discours, ce qui est utile pour
+                        sélectionner les catégories de mots à traiter dans le BAO 3.</p>
+                    <p align = "justify">La première étape consiste à appliquer les trois modules au contenu XML afin
+                        d'obtenir les mots tokenisés. En important le module et suivant chacun les
+                        règles d'application, la tokenisation est réalisée automatiquement. Ensuite,
+                        en se basant sur ces tokens, les analyseurs leur attribuent des valeurs
+                        syntaxiques comprenant la forme, la partie du discours et le lemme.</p>
+                    <p align = "justify">Après avoir évalué globalement les performances des trois analyseurs
+                        automatiques, nous avons finalement choisi "spaCy" comme module par défaut. En
+                        réalité, les trois analyseurs présentent une qualité de tokenisation
+                        similaire. Cependant, compte tenu du temps de téléchargement du module,
+                        trankit est trop lourd à utiliser. De plus, étant donné que spacy est déjà
+                        largement utilisé dans nos flux de travail, nous avons donc opté pour ce choix.</p>
+                    <p align = "justify">En un mot, l'enrichissement de données (les valeurs syntaxiques des mots) nous permet
+                        d'obtenir finalement des fichiers xml, contenant toujours les titres et les
+                        descriptions de nouvelles, mais cette fois avec les trois valeurs
+                        morpho-syntaxiques ou bien tokens de chaque mot dans le corpus.</p>
+                    <p align = "justify">Nous avons alors mis à dispoistion le choix des outils pour tokeniser les mots tout en ajoutant les arguments au sein de "argparser", il est
+                        maitenant possible de choisir l'analyseur préféré pour traiter le corpus.</p>
+                    <h3 class="major">Script</h3>
+                    <p align = "justify">Nous vous présentons ici trois scripts différents en vue de tokeniser le contenu en se servant respectivement les trois outils de corpus dont nous avons parlé juste avant.</p>
+                    <ul class="actions">
+                        <li>
+                            <a href="./fichiers/scripts/analyse_sp.py" class="button primary"
+                                >Script spaCy</a>
+                        </li>
+                        <li>
+                            <a href="./fichiers/scripts/analyse_st.py" class="button">script stanza</a>
+                        </li>
+                        <li>
+                            <a href="./fichiers/scripts/analyse_tk.py" class="button">script trankit</a>
+                        </li>
+                    </ul>
+                    <pre><code>#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+                        
+import spacy
+
+from collections import namedtuple
+from dataclasses import dataclass
+
+from datastructures import Token, Article
+
+
+def create_parser():
+    return spacy.load("fr_core_news_md")
+
+
+def analyse_article(parser, article: Article) -> Article:
+    result = parser( (article.titre or "" ) + "\n" + (article.description or ""))
+    output = []
+    for token in result:
+        output.append(Token(token.text, token.lemma_, token.pos_))
+    article.analyse = output
+    return article	
+                                                
+                    </code></pre>
+                    <section class="features">
+                        <article>
+                            <h3 class="major">boîte à outils 1</h3>
+                            <p>Enrichissement des données</p>
+                            <a href="./BAO1.html" class="special">Savoir plus</a>
+                        </article>
+                        <article>
+                            <h3 class="major">boîte à outils 3</h3>
+                            <p>Récupération automatique des patrons</p>
+                            <a href="./BAO3.html" class="special">Savoir plus</a>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </section>
+        <footer id="footer">
+            <ul class="copyright">
+                <li>&copy; ppe2_chz</li>
+                <li>Xinhao, Weixuan, Yidi</li>
+            </ul>
+        </footer>
+        <!--scripts-->
+        <script src="javascript/jquery.min.js"></script>
+        <script src="javascript/jquery.scrollex.min.js"></script>
+        <script src="javascript/browser.min.js"></script>
+        <script src="javascript/breakpoints.min.js"></script>
+        <script src="javascript/util.js"></script>
+    </body>
+</html>
+

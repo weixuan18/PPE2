@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./css/sous-style1.css" />
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+        <link href = "./img/avatar_ppe2.png" rel = "SHORTCUT ICON">
+        <title>bao3</title>
+    </head>
+    <body>
+        <header class="header">
+            <a href="#" class="logo">Projet Encadré: <h1 class="title">Boite À Outils 3</h1></a>
+            <nav class="navbar">
+                <a href="./index.html" class="item" style="--i: 1">Accueil</a>
+                <a href="./BAO1.html" class="item" style="--i:  2">BAO1</a>
+                <a href="./BAO2.html" class="item" style="--i:  3">BAO2</a>
+                <a href="./BAO3.html" class="active item" style="--i:  4">BAO3</a>
+                <a href="./BAO4.html" class="item" style="--i:  5">BAO4</a>
+            </nav>
+        </header>
+        <section id="wrapper">
+            <header>
+                <div class="inner">
+                    <h2>Boîte à Outils 3</h2>
+                    <p>Topic modeling, Analyse dans le temps</p>
+                </div>
+            </header>
+            <!-- Content -->
+            <div class="wrapper">
+                <div class="inner">
+                    <h3 class="major">Idée principale</h3>
+                    <p align = "justify">PyLDA (Python Latent Dirichlet Allocation) est une bibliothèque Python puissante et facile à utiliser pour effectuer l'analyse de sujets à l'aide de la méthode de Latent Dirichlet Allocation (LDA). LDA est une technique populaire d'apprentissage automatique non supervisé qui permet d'extraire des thèmes à partir d'un ensemble de documents textuels. PyLDA offre une interface simple pour charger des données textuelles, former des modèles LDA et explorer les résultats obtenus.</p>
+                    <p align = "justify">Dans BAO 3, nous avons procédé à la méthode non-supervisée LDA, après avoir importé notre propre corpus, pour redonner automatiquement les thématiques du corpus dont le nombre peut se limiter par humain. Ainsi, il est pertinent de choisir les catégories et les durées de nouvelles à l'aide du script `extraire_many.py`, et utiliser les fichiers xml produits pour repérer les sujets.</p>
+                    <p align = "justify">1. Prétraiter les documents : les convertir en minuscules, les segmenter en mots, supprimer les chiffres et les mots d'un seul caractère, et les normaliser en forme de base. 2. Calculer les bigrammes et les ajouter aux données d'origine. 3. Supprimer les termes avec une fréquence de document trop faible ou trop élevée et créer un dictionnaire. 4. Convertir les documents en vecteurs de sacs de mots. 5. Former le modèle LDA et ajuster les paramètres tels que le nombre de sujets, la taille des blocs et les itérations d'entraînement. 6. Calculer la cohérence des sujets, afficher la cohérence moyenne des sujets et imprimer les sujets par ordre de cohérence.</p>
+                    <p align = "justify">Plusieurs paramètres importantes peuvent être y ajustés de sorte à amélioréer la performance de l'apprentissage: </p>
+                    <p align = "justify">• docs: Il s'agit de la liste des documents à utiliser pour construire le modèle LDA. Chaque document est représenté comme une liste des listes de mots.</p>
+                    <p align = "justify">• num_topics: Ce paramètre spécifie le nombre de sujets (topics) que le modèle LDA doit identifier dans les documents.</p>
+                    <p align = "justify">• chunksize: Il indique la taille des morceaux (chunks) utilisés lors de l'apprentissage du modèle. Un chunk est une portion de documents traités simultanément.</p>
+                    <p align = "justify">• passes: Ce paramètre détermine le nombre de passages (iterations) complets sur le corpus d'apprentissage lors de la construction du modèle.</p>
+                    <p align = "justify">• iterations: C'est le nombre d'itérations pour chaque passage sur le corpus. Une itération correspond à un passage sur chaque document du corpus.</p>
+                    <p align = "justify">• eval_every: Ce paramètre contrôle la fréquence à laquelle la log-vraisemblance du modèle est évaluée. Si sa valeur est définie à None, la log-vraisemblance n'est pas évaluée.</p>
+                    <p align = "justify">• no_below: Il spécifie le nombre minimum d'occurrences qu'un mot doit avoir dans le corpus pour être inclus dans le modèle.</p>
+                    <p align = "justify">• no_above: Ce paramètre détermine la proportion maximale de documents dans lesquels un mot peut apparaître pour être inclus dans le modèle. Les mots qui apparaissent dans plus de no_above% des documents seront ignorés.</p>
+                    <p align = "justify"> Ces paramètres, notamment le nombre de sujet peuvent être les arguments dans la commande à l'aide de `argparse`. En plus, en choisissant les catégories de tokens (pos), il est possible d'éviter la pollution des mots vides.</p>
+                    <p align = "justify"> 
+                    <h3 class="major">Script</h3>
+                    <p align = "justify">Conformément aux scripts fournis par le prof, nous avons conçu notre propre version de script pour entraîner le modèle LDA. Là, nous avons mis tous les paramètres du modèle comme arguments. Également, dans les arguments, nous avons le droit de personnaliser le corpus à entraîner en déterminant les parties du discours spécifiques dans les tokens des textes. </p>
+                    <ul class="actions">
+                        <li>
+                            <a href="./fichiers/scripts/LDA_model.py" class="button primary"
+                                >Script</a>
+                        </li>
+                    </ul>
+                    <pre><code>#!/usr/bin/env python3
+r"""
+LDA Model
+=========
+
+Introduces Gensim's LDA model and demonstrates its use on the NIPS corpus.
+
+"""
+
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+import argparse
+import sys
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem.wordnet import WordNetLemmatizer
+from gensim.models import Phrases
+from gensim.corpora import Dictionary
+
+
+def charge_xml(xmlfile,upos):
+    import xml.etree.ElementTree as ET 
+    with open(xmlfile, 'r') as f:
+        xml = ET.parse(f)
+        docs = []
+        for article in xml.findall("//analyse"):
+            doc = []
+            for token in article.findall("./token"):
+                if token.attrib['pos'] in upos:
+                    form = token.attrib['forme']
+                    lemme = token.attrib['lemme']
+                    pos = token.attrib['pos']
+                    doc.append(f"{form}/{lemme}/{pos}")
+            if len(doc) > 0:
+                docs.append(doc)
+    return docs
+
+
+def charge_json(jsonfile,upos):
+    import json
+    with open(jsonfile, 'r') as f:
+        data = json.load(f)
+        docs = []
+        for article in data['articles']:
+            doc = []
+            for token in article['analyse']:
+                if token.attrib['pos'] in upos:
+                    form = token.attrib['forme']
+                    lemme = token.attrib['lemme']
+                    pos = token.attrib['pos']
+                    doc.append(f"{form}/{lemme}/{pos}")
+            if len(doc) > 0:
+                docs.append(doc)
+    return docs
+
+
+def charge_pickle(picklefile,upos):
+    import pickle
+    with open(picklefile, 'rb') as f:
+        data = pickle.load(f)
+        docs = []
+        for article in data['articles']:
+            doc = []
+            for token in article['analyse']:
+                if token.attrib['pos'] in upos:
+                    form = token.attrib['forme']
+                    lemme = token.attrib['lemme']
+                    pos = token.attrib['pos']
+                    doc.append(f"{form}/{lemme}/{pos}")
+            if len(doc) > 0:
+                docs.append(doc)
+    return docs
+
+# Add bigrams and trigrams to docs (only ones that appear 20 times or more).
+
+def add_bigrams(docs, min_count=20):
+    bigram = Phrases(docs, min_count=20)
+    for idx in range(len(docs)):
+        for token in bigram[docs[idx]]:
+            if '_' in token:
+                # Token is a bigram, add to document.
+                docs[idx].append(token)
+    return docs
+
+from gensim.models import LdaModel
+
+def train_lda_model(docs, num_topics=10, chunksize=2000, passes=20, iterations=400, eval_every=None,no_below=50,no_above=0.6):
+    # fixer les paramètres du modèle
+
+    # Create a dictionary representation of the documents
+    dictionary = Dictionary(docs)
+
+    # Filter out words that occur less than 20 documents, or more than 50% of the documents
+    dictionary.filter_extremes(no_below=no_below, no_above=no_above)
+
+    # Bag-of-words representation of the documents
+    corpus = [dictionary.doc2bow(doc) for doc in docs]
+    print('Number of unique tokens: %d' % len(dictionary),sys.stderr)
+    print('Number of documents: %d' % len(corpus))
+
+
+    # Make an index to word dictionary.
+    temp = dictionary[0]  # This is only to "load" the dictionary.
+    id2word = dictionary.id2token
+
+    model = LdaModel(
+        corpus=corpus,
+        id2word=id2word,
+        chunksize=chunksize,
+        alpha='auto',
+        eta='auto',
+        iterations=iterations,
+        num_topics=num_topics,
+        passes=passes,
+        eval_every=eval_every
+    )
+
+    return corpus, dictionary, model
+
+def print_coherence(model,corpus):
+
+    top_topics = model.top_topics(corpus)
+
+    # Average topic coherence is the sum of topic coherences of all topics, divided by the number of topics.
+    avg_topic_coherence = sum([t[1] for t in top_topics]) / model.num_topics
+    print('Average topic coherence: %.4f.' % avg_topic_coherence)
+    from pprint import pprint
+    pprint(top_topics)
+    
+
+import pyLDAvis
+import pyLDAvis.gensim_models as gensimvis
+
+def visualize_lda_model(model, corpus,dictionary, output_filename='lda_visualization.html'):
+    vis_data = gensimvis.prepare(model, corpus, dictionary)
+    with open(output_filename, 'w') as fout:
+        pyLDAvis.save_html(vis_data, fout)
+
+# Example usage:
+#visualize_lda_model(trained_model, corpus, dictionary, output_filename='sortie.html')
+
+def main():
+    parser = argparse.ArgumentParser(description='Modèle LDA')
+    parser.add_argument('-i', type=str, required=True, help='Chemin du fichier d\'entrée (format XML, JSON ou pickle)')
+    parser.add_argument('-f', type=str, choices=['xml', 'json', 'pickle'], required=True, help='Format du fichier d\'entrée (xml, json ou pickle)')
+    parser.add_argument('-o', type=str, default = None, help='Chemin du fichier de sortie pour la visualisation (format HTML)')
+    parser.add_argument('-c', action='store_true',default = False, help='Afficher la cohérence des sujets')
+    parser.add_argument('--no_below', type=int, default=50, help='Nombre minimum de documents dans lesquels un mot doit apparaître pour être conservé (par défaut=20)')
+    parser.add_argument('--no_above', type=float, default=0.6, help='Pourcentage maximum de documents dans lesquels un mot peut apparaître pour être conservé (par défaut=0.5)')
+    parser.add_argument('--num_topics', type=int, default=10, help='Nombre de sujets pour le modèle LDA (par défaut=10)')
+    parser.add_argument('--chunksize', type=int, default=2000, help='Taille des lots pour l\'entraînement du modèle LDA (par défaut=2000)')
+    parser.add_argument('--passes', type=int, default=20, help='Nombre de passes pour l\'entraînement du modèle LDA (par défaut=20)')
+    parser.add_argument('--iterations', type=int, default=400, help='Nombre d\'itérations pour l\'entraînement du modèle LDA (par défaut=400)')
+    parser.add_argument('POS',nargs= '*', help='parties du discours à retenir')
+    args = parser.parse_args()
+
+    # Charger les documents depuis le fichier
+    if args.f == 'xml':
+        docs = charge_xml(args.i,args.POS)
+    elif args.f == 'json':
+        docs = charge_json(args.i,args.POS)
+    elif args.f == 'pickle':
+        docs = charge_pickle(args.i,args.POS)
+    else:
+        raise ValueError('Format d\'entrée inconnu')
+
+    # Prétraiter les documents
+    docs = add_bigrams(docs)
+
+    # Entraîner le modèle LDA
+    corpus,dic,lda_model = train_lda_model(docs, num_topics=args.num_topics, chunksize=args.chunksize, passes=args.passes, iterations=args.iterations,no_below=args.no_below,no_above=args.no_above)
+
+    if args.o is not None:
+        # Visualiser le modèle LDA
+        visualize_lda_model(lda_model, corpus, dic, output_filename=args.o)
+    if args.c is True:
+        print_coherence(lda_model,corpus)
+
+if __name__ == '__main__':
+    main()
+
+# exemple d'utilisation: python3 LDA_model.py -i ../data/2022-01-01.xml -f xml -o sortie.html -c True --num_topics 10 --chunksize 2000 --passes 20 --iterations 400 --no_below 50 --no_above 0.6 ADJ NOUN VERB PROPN
+                                                
+                    </code></pre>
+                    <section class="features">
+                        <article>
+                            <h3 class="major">boîte à outils 2</h3>
+                            <p>Enrichissement des données</p>
+                            <a href="./BAO2.html" class="special">Savoir plus</a>
+                        </article>
+                        <article>
+                            <h3 class="major">boîte à outils 4</h3>
+                            <p>visualisation et Analyse</p>
+                            <a href="./BAO4.html" class="special">Savoir plus</a>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </section>
+                <footer id="footer">
+                    <ul class="copyright">
+                        <li>&copy; ppe2_chz</li>
+                        <li>Xinhao, Weixuan, Yidi</li>
+                    </ul>
+                </footer>
+                <!--scripts-->
+                <script src="javascript/jquery.min.js"></script>
+                <script src="javascript/jquery.scrollex.min.js"></script>
+                <script src="javascript/browser.min.js"></script>
+                <script src="javascript/breakpoints.min.js"></script>
+                <script src="javascript/util.js"></script>
+    </body>
+</html>
+
+
+
